@@ -17,9 +17,9 @@ public:
 	bool connection = false;
 	
 	// Functions
-	int CreateConnection(PCSTR port);
-	int StartListening(int sock, addrinfo* result);
-	int CloseConnection(int sock);
+	SOCKET CreateConnection(PCSTR port);
+	int StartListening(SOCKET sock, addrinfo* result);
+	int CloseConnection(SOCKET sock);
 
 	// Callbacks
 	int OnDataRecieve(int sock, int recvlen, char* dRecieved);

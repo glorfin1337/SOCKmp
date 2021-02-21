@@ -12,7 +12,7 @@
 
 #define DEFAULT_BUFLEN 512
 
-int Server::CreateConnection(PCSTR port)
+SOCKET Server::CreateConnection(PCSTR port)
 {
     WSADATA wsaData;
     int iResult;
@@ -55,7 +55,7 @@ int Server::CreateConnection(PCSTR port)
 	return ListenSocket;
 }
 
-int Server::StartListening(int sock, addrinfo* result)
+int Server::StartListening(SOCKET sock, addrinfo* result)
 {
     int iResult, iSendResult, recvbuflen = DEFAULT_BUFLEN;
     char recvbuf[DEFAULT_BUFLEN];
@@ -111,7 +111,7 @@ int Server::OnDataRecieve(int sock, int recvlen, char* dRecieved)
     return 1;
 }
 
-int Server::CloseConnection(int sock)
+int Server::CloseConnection(SOCKET sock)
 {
     Server::connection = false;
     closesocket(sock);

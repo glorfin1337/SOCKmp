@@ -153,6 +153,7 @@
     <ClCompile Include="src\SOCK.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="SOCKmp.inc" />
     <None Include="src\source.def" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

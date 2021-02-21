@@ -49,5 +49,8 @@
     <None Include="src\source.def">
       <Filter>Kaynak Dosyaları</Filter>
     </None>
+    <None Include="SOCKmp.inc">
+      <Filter>Kaynak Dosyaları</Filter>
+    </None>
   </ItemGroup>
 </Project>
