@@ -14,13 +14,13 @@ class Server
 {
 public:
 	// Variables
-	int connection = 0;
+	bool connection = false;
 	
 	// Functions
-	int CreateServer(PCSTR port);
+	int CreateConnection(PCSTR port);
 	int StartListening(int sock, addrinfo* result);
-	int CloseServer(int sock);
+	int CloseConnection(int sock);
 
 	// Callbacks
-	int OnDataRecieve(int sock, int recvlen, char dRecieved);
+	int OnDataRecieve(int sock, int recvlen, char* dRecieved);
 };

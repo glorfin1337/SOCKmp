@@ -12,7 +12,7 @@
 
 #define DEFAULT_BUFLEN 512
 
-int Server::CreateServer(PCSTR port)
+int Server::CreateConnection(PCSTR port)
 {
     WSADATA wsaData;
     int iResult;
@@ -22,10 +22,6 @@ int Server::CreateServer(PCSTR port)
 
     struct addrinfo* result = NULL;
     struct addrinfo hints;
-
-    int iSendResult;
-    char recvbuf[DEFAULT_BUFLEN];
-    int recvbuflen = DEFAULT_BUFLEN;
 
     iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
     if (iResult != 0) {
@@ -54,13 +50,17 @@ int Server::CreateServer(PCSTR port)
         return 0;
     }
 
+    Server::connection = true;
     Server::StartListening(ListenSocket, result);
 	return ListenSocket;
 }
 
 int Server::StartListening(int sock, addrinfo* result)
 {
-    int iResult = bind(sock, result->ai_addr, (int)result->ai_addrlen);
+    int iResult, iSendResult, recvbuflen = DEFAULT_BUFLEN;
+    char recvbuf[DEFAULT_BUFLEN];
+
+    iResult = bind(sock, result->ai_addr, (int)result->ai_addrlen);
     if (iResult == SOCKET_ERROR) {
         printf("bind failed with error: %d\n", WSAGetLastError());
         freeaddrinfo(result);
@@ -87,17 +87,33 @@ int Server::StartListening(int sock, addrinfo* result)
         return 0;
     }
 
+    while (!Server::connection)
+    {
+        iResult = recv(ClientSocket, recvbuf, recvbuflen, 0);
+        if (iResult > 0) {
+            printf("Bytes received: %d\n", iResult);
+
+            iSendResult = send(ClientSocket, recvbuf, iResult, 0);
+            if (iSendResult == SOCKET_ERROR) {
+                printf("send failed with error: %d\n", WSAGetLastError());
+                closesocket(ClientSocket);
+                WSACleanup();
+                return 1;
+            }
+            Server::OnDataRecieve(sock, recvbuflen, recvbuf);
+        }
+    }
     return 1;
 }
 
-int Server::OnDataRecieve(int sock, int recvlen, char dRecieved)
+int Server::OnDataRecieve(int sock, int recvlen, char* dRecieved)
 {
-
     return 1;
 }
 
-int Server::CloseServer(int sock)
+int Server::CloseConnection(int sock)
 {
+    Server::connection = false;
     closesocket(sock);
     WSACleanup();
 	return 1;

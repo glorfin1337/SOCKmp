@@ -10,7 +10,6 @@ extern void* pAMXFunctions;
 
 cell AMX_NATIVE_CALL HelloWorld(AMX* amx, cell* params)
 {
-    //logprintf("This was printed from the Test plugin! Yay!");
     return 1;
 }
 
@@ -22,15 +21,17 @@ PLUGIN_EXPORT unsigned int PLUGIN_CALL Supports()
 PLUGIN_EXPORT bool PLUGIN_CALL Load(void** ppData)
 {
     pAMXFunctions = ppData[PLUGIN_DATA_AMX_EXPORTS];
-    //logprintf = (logprintf_t)ppData[PLUGIN_DATA_LOGPRINTF];
-
-    //logprintf(" * Test plugin was loaded.");
+    logprintf = (logprintf_t)ppData[PLUGIN_DATA_LOGPRINTF];
+    
+    char notf[64] =  "\n * SOCKmp is loaded. Developer: Glorfin *";
+    logprintf(notf);
     return true;
 }
 
 PLUGIN_EXPORT void PLUGIN_CALL Unload()
 {
-    //logprintf(" * Test plugin was unloaded.");
+    char notf[64] = "\n * SOCKmp was unloaded. Developer: Glorfin *";
+    logprintf(notf);
 }
 
 AMX_NATIVE_INFO PluginNatives[] =
