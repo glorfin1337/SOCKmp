@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{d7982d6b-8a9c-43b2-83e6-a7d9a5ef1336}</ProjectGuid>
+    <ProjectGuid>{4cec8a38-6202-4b54-99d5-3822d1ea5f7c}</ProjectGuid>
     <RootNamespace>SOCKmp</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -88,11 +88,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>Default</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ModuleDefinitionFile>src\source.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>C:\Users\user\Documents\GitHub\SOCKmp\main.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -140,21 +142,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\headers\SOCK.h" />
-    <ClInclude Include="src\SDK\amx\amx.h" />
-    <ClInclude Include="src\SDK\amx\getch.h" />
-    <ClInclude Include="src\SDK\amx\sclinux.h" />
-    <ClInclude Include="src\SDK\plugin.h" />
-    <ClInclude Include="src\SDK\plugincommon.h" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="SDK\amxplugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\SDK\amxplugin.cpp" />
-    <ClCompile Include="src\SOCK.cpp" />
+    <None Include="main.def" />
+    <None Include="src\sock-mp.inc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="SOCKmp.inc" />
-    <None Include="src\source.def" />
+    <ClInclude Include="SDK\amx\amx.h" />
+    <ClInclude Include="SDK\amx\getch.h" />
+    <ClInclude Include="SDK\amx\sclinux.h" />
+    <ClInclude Include="SDK\plugin.h" />
+    <ClInclude Include="SDK\plugincommon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
